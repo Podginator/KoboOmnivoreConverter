@@ -62,7 +62,7 @@ export const fetchPages = async (): Promise<SearchItemEdge[]> => {
               }
             }
           }`,
-    variables: { query: "in:inbox", after: "1", first: 100 },
+    variables: { query: "in:inbox", after: "0", first: 100 },
   };
 
   const response: AxiosResponse<{ data: { search: SearchSuccess } }> =

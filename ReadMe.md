@@ -4,7 +4,7 @@ This project aims to convert the Pocket App on the Kobo E-Reader, specifically t
 
 ## How it works
 
-This currently runs  within my local network, on a Raspberry Pi. By making changes to the Kobo Clara's host file, it acts as a proxy server that can redirect and intercept network requests from the e-reader. This allows us to intercept Pocket traffic, redirect it to Omnivore, and intercepts the archive. Other functionality is not yet enabled.
+This currently runs  within my local network, on a Raspberry Pi. By making changes to the Kobo Clara's host file, it acts as a proxy server that can redirect and intercept network requests from the e-reader. This allows us to intercept Pocket traffic, redirect it to Omnivore, and intercepts the archive. Other functionality is not yet enabled. 
 
 ## Technology Used
 
