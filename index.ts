@@ -10,7 +10,14 @@ import {
 
 (async () => { 
   const proxyApp = express();
-  const omnivoreClient = await OmnivoreClient.createOmnivoreClient();
+  let omnivoreClient: null | OmnivoreClient = null;
+  const getOmnivoreClient = async (token: string) => {
+    if (!omnivoreClient) {  
+      omnivoreClient = await OmnivoreClient.createOmnivoreClient(token);
+    }
+
+    return omnivoreClient;
+  }
 
   proxyApp.use(bodyParser.json());
   proxyApp.use(bodyParser.urlencoded({ extended: true }));
@@ -20,24 +27,25 @@ import {
     async (
       req: TypedRequestBody<{
         actions: Array<{ action: string; item_id: string }>;
+        access_token: string;
       }>,
       res: Response
     ): Promise<void> => {
-      const { body } = req;
-      const { actions } = body;
+      const { actions, access_token } = req.body;
+      const client = await getOmnivoreClient(access_token);
 
       const archives = actions
         .filter((it) => it.action === "archive")
         .map((it) => it.item_id);
-      console.log(await Promise.all(archives.map(omnivoreClient.archiveLink)));
+      console.log(await Promise.all(archives.map(client.archiveLink)));
 
       res.send({ action_results: [] });
     }
   );
 
   proxyApp.post("/v3/get", async (req: Request, res: Response): Promise<void> => {
-    console.log("Converting Latest articles from Omnivore");
-    const articles = await omnivoreClient.fetchPages();
+    const client = await getOmnivoreClient(req.body.access_token);
+    const articles = await client.fetchPages();
     const converted = convertSearchResultsToPocketArticles(articles);
 
     res.send(converted);
@@ -46,9 +54,9 @@ import {
   proxyApp.post(
     "/v3beta/text",
     async (req: Request, res: Response): Promise<void> => {
-      const { url } = req.body;
-
-      const article = await omnivoreClient.fetchPage("Podginator", url);
+      const { url, access_token } = req.body;
+      const client = await getOmnivoreClient(access_token);
+      const article = await client.fetchPage(url);
 
       res.send(articleToPocketFormat(article));
     }

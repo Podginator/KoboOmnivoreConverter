@@ -11,18 +11,19 @@ const API_URL =
 
 export class OmnivoreClient { 
   #username: string; 
-  private constructor(username: string) { 
+  #token: string;
+  private constructor(username: string, token: string) { 
     this.#username = username;
   }
 
-  static async createOmnivoreClient(): Promise<OmnivoreClient> { 
+  static async createOmnivoreClient(token: string): Promise<OmnivoreClient> { 
     return new OmnivoreClient(await this.getUsername());
   }
 
   private static async getUsername(): Promise<string> { 
     const data = JSON.stringify({
       query: `query GetUsername {
-          query me {
+          me {
             profile {
               username
             }
@@ -31,7 +32,7 @@ export class OmnivoreClient {
     `,
     });
 
-    const response: AxiosResponse<{ data: { search: SearchSuccess } }> =
+    const response =
       await axios
         .post(`${API_URL}/graphql`, data, {
           headers: {
@@ -44,7 +45,7 @@ export class OmnivoreClient {
           throw error;
         });
   
-    return response.data.me.profile.username;
+    return response.data.data.me.profile.username;
   }
 
   async fetchPages(): Promise<SearchItemEdge[]> {
