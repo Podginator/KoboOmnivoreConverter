@@ -10,17 +10,19 @@ const API_URL =
   process.env.OMNIVORE_API_URL ?? "https://api-prod.omnivore.app/api";
 
 export class OmnivoreClient { 
-  #username: string; 
-  #token: string;
+  username: string; 
+  token: string;
+
   private constructor(username: string, token: string) { 
-    this.#username = username;
+    this.username = username;
+    this.token = token;
   }
 
   static async createOmnivoreClient(token: string): Promise<OmnivoreClient> { 
-    return new OmnivoreClient(await this.getUsername());
+    return new OmnivoreClient(token, await this.getUsername(token));
   }
 
-  private static async getUsername(): Promise<string> { 
+  private static async getUsername(token: string): Promise<string> { 
     const data = JSON.stringify({
       query: `query GetUsername {
           me {
@@ -36,7 +38,7 @@ export class OmnivoreClient {
       await axios
         .post(`${API_URL}/graphql`, data, {
           headers: {
-            Cookie: `auth=${process.env.OMNIVORE_AUTH_TOKEN!};`,
+            Cookie: `auth=${token};`,
             "Content-Type": "application/json",
           },
         })
@@ -123,7 +125,7 @@ export class OmnivoreClient {
   async fetchPage(slug: string): Promise<Article> {
     const data = JSON.stringify({
       variables: {
-        username: this.#username,
+        username: this.username,
         slug,
       },
       query: `query GetArticle(
@@ -154,7 +156,7 @@ export class OmnivoreClient {
     const response: AxiosResponse<{ data: { article: ArticleSuccess } }> =
       await axios.post(`${API_URL}/graphql`, data, {
         headers: {
-          Cookie: `auth=${process.env.OMNIVORE_AUTH_TOKEN!};`,
+          Cookie: `auth=${this.token};`,
           "Content-Type": "application/json",
         },
       });
@@ -183,7 +185,7 @@ export class OmnivoreClient {
         { query: mutation, variables: { id } },
         {
           headers: {
-            Cookie: `auth=${process.env.OMNIVORE_AUTH_TOKEN!};`,
+            Cookie: `auth=${this.token};`,
             "Content-Type": "application/json",
           },
         }
