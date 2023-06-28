@@ -8,7 +8,7 @@ This currently runs  within my local network, on a Raspberry Pi. By making chang
 
 ## Demo 
 
-[!VideoOfKobo](./docs/result1687943216.webm)
+![VideoOfKobo](./docs/result1687943216.webm)
 
 ## Technology Used
 
