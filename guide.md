@@ -73,7 +73,7 @@ In order to connect to Omnivore you need to do the following
     * Open this file and edit the following section. In the AccessToken section add the API Key created on Omnivore
     ```
     [Pocket]
-    AccessToken=<Access Token> 
+    AccessToken=<API Key> 
     LastSync=0
     RemoveContentWhenRead=false
     UnsyncedUrls=@Invalid()
