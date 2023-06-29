@@ -40,11 +40,11 @@ This update has done 2 things:
 
 * Get the IP Address of your Kobo Device, You can see this in Settings -> Device Information. It should be in a format as follows: `192.168.x.x`    
     
-* Telnet into the device by entering the following command `telnet {ip address}` - Replace {ip address} with the ip from the step above.  
+* Telnet into the device by entering the following command `telnet {ip address}` - Replace {ip address} with the ip with the one got from your server machine.   
     * You should see a login screen. Enter `root`
     * It is a good idea to add a password here, do this by entering `passwd`.
 
-* Enter the following command `sudo sh -c 'echo "{ip address} text.fckpocket.com fckkpocket.com" >> /etc/hosts'` - once again replacing {ip address} with the ip address from the above.
+* Enter the following command `sudo sh -c 'echo "{ip address} text.fckpocket.com fckkpocket.com" >> /etc/hosts'` - once again replacing {ip address} with the one got from your server machine.
 
 * Reboot the device. 
 
