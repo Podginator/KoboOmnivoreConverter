@@ -23,7 +23,7 @@ Please go to section #TBD to see how to create the KoboRoot file from scratch.
 
 
 ### Updating
-Attached in this respository is a file, KoboRoot.tg.gz. 
+Attached in this respository is a file, KoboRoot.tg.gz. It is located in the resources folder of this repository.
 
 This file contains a firmware update, based on Firmware 4.37.21533 (June 2023). In order to install this you must place it in the .kobo directory of your Kobo Device. Connect your device via USB, and place this file in the .kobo directory. This file may be hidden, and you will have to show hidden files if doing this via Explorer (Mac = CMD+.)
 
