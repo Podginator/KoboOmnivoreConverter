@@ -16,24 +16,9 @@ This currently runs  within my local network, on a Raspberry Pi. By making chang
 - **Node:** The project utilizes Node.js, a JavaScript runtime, to run the server-side code.
 - **Express:** Express is a minimal and flexible web application framework for Node.js. It provides a robust set of features for building web applications and APIs.
 
-## Getting Started
+## [Getting Started](./guide.md)
 
-To get started with the Kobo E-Reader Omnivore to Pocket Proxy, follow these steps:
-
-1. Ensure that you have this hosted somewhere, either locally, or on the cloud with a static ip.
-2. Modify the host file on your Kobo Clara using the tutorial mentioned above.
-3. Clone this repository to your Raspberry Pi or similar networked device.
-4. Install the required dependencies by running the following command:
-```
-npm install
-
-```
-5. Start the server by running:
-```
-npm start
-```
-
-lease note that this project is open to contributions and improvements. If you have any suggestions or ideas to enhance the functionality or features, feel free to submit a pull request.
+See [guide.md](./guide.md);
 
 ## License
 
