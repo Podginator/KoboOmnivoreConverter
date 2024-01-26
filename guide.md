@@ -44,7 +44,7 @@ This update has done 2 things:
     * You should see a login screen. Enter `root`
     * It is a good idea to add a password here, do this by entering `passwd`.
 
-* Enter the following command `sudo sh -c 'echo "{ip address} text.fckpocket.com fckkpocket.com" >> /etc/hosts'` - once again replacing {ip address} with the one got from your server machine.
+* Enter the following command `sudo sh -c 'echo "{ip address} text.fckpocket.com fckpocket.com" >> /etc/hosts'` - once again replacing {ip address} with the one got from your server machine.
 
 * Reboot the device. 
 
