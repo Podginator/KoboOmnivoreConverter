@@ -25,14 +25,14 @@ Please go to section #TBD to see how to create the KoboRoot file from scratch.
 ### Updating
 Attached in this respository is a file, KoboRoot.tg.gz. It is located in the resources folder of this repository.
 
-This file contains a firmware update, based on Firmware 4.37.21533 (June 2023). In order to install this you must place it in the .kobo directory of your Kobo Device. Connect your device via USB, and place this file in the .kobo directory. This file may be hidden, and you will have to show hidden files if doing this via Explorer (Mac = CMD+.)
+This file contains a NickelHook library, that redirects pocket requests to the host.. In order to install this you must place it in the .kobo directory of your Kobo Device. Connect your device via USB, and place this file in the .kobo directory. This file may be hidden, and you will have to show hidden files if doing this via Explorer (Mac = CMD+Shift+.)
 
 Reboot your device as you should see an update screen. Once completed, you will be placed back in the kobo screen. 
 
 This update has done 2 things: 
 
 * Enabled TelNet on your device (See [Here](https://yingtongli.me/blog/2018/07/30/kobo-telnet.html))
-* Modified the libnickel library to point to a new host for the pocket app. 
+* A hook, PocketInterceptor, has been installed.
 
 ## Modifying your host file to redirect to the Raspberry Pi or equivalent.
 

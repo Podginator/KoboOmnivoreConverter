@@ -1,0 +1,6 @@
+# make gitignore
+.vscode/
+.idea/
+/KoboRoot.tgz
+libpocket.so
+pocket.o
