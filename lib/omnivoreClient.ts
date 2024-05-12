@@ -19,7 +19,7 @@ export class OmnivoreClient {
   }
 
   static async createOmnivoreClient(token: string): Promise<OmnivoreClient> { 
-    return new OmnivoreClient(token, await this.getUsername(token));
+    return new OmnivoreClient(await this.getUsername(token), token);
   }
 
   private static async getUsername(token: string): Promise<string> { 
