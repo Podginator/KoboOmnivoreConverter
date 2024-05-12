@@ -110,7 +110,7 @@ export class OmnivoreClient {
       await axios
         .post(`${API_URL}/graphql`, data, {
           headers: {
-            Cookie: `auth=${process.env.OMNIVORE_AUTH_TOKEN!};`,
+            Cookie: `auth=${this.token};`,
             "Content-Type": "application/json",
           },
         })
