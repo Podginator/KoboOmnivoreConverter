@@ -37,7 +37,7 @@ import {
       const archives = actions
         .filter((it) => it.action === "archive")
         .map((it) => it.item_id);
-      console.log(await Promise.all(archives.map(client.archiveLink)));
+      console.log(await Promise.all(archives.map(client.archiveLink, client)));
 
       res.send({ action_results: [] });
     }
