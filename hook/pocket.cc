@@ -55,7 +55,7 @@ extern "C" __attribute__((visibility("default"))) void _intercept_network(QUrl u
     else if (strcmp(urlChar, "https://text.getpocket.com/v3beta/text") == 0)
     {
         nh_log("Redirecting Pocket Call to Omnivore Converter");
-        replacementUrl = QUrl("http://text.fckpocket.com/v3beta/text");
+        replacementUrl = QUrl("http://text.fckpocket.com/v3beta/text?access_token=<your-access-token>");
     }
     
     makeQRequest_orig(replacementUrl, param, headers, output, inflater, param1, param2, cl);

@@ -1,72 +1,55 @@
-import http from "http";
-import express, { type Request, type Response } from "express";
-import { type TypedRequestBody } from "./types/Express";
-import bodyParser from "body-parser";
-import { OmnivoreClient } from "./lib/omnivoreClient"
+import { Hono } from "hono";
+import { OmnivoreClient } from "./lib/omnivoreClient";
 import {
   convertSearchResultsToPocketArticles,
   articleToPocketFormat,
 } from "./lib/pocketConverter";
 
-(async () => { 
-  const proxyApp = express();
-  let omnivoreClient: null | OmnivoreClient = null;
-  const getOmnivoreClient = async (token: string) => {
-    if (!omnivoreClient) {  
-      omnivoreClient = await OmnivoreClient.createOmnivoreClient(token);
-    }
+type Bindings = {
+  OMNI_API_URL: string;
+};
 
-    return omnivoreClient;
-  }
+const app = new Hono<{ Bindings: Bindings }>();
 
-  proxyApp.use(bodyParser.json());
-  proxyApp.use(bodyParser.urlencoded({ extended: true }));
+const getOmnivoreClient = async (
+  apiUrl: string,
+  token: string
+): Promise<OmnivoreClient> => {
+  return await OmnivoreClient.createOmnivoreClient(apiUrl, token);
+};
 
-  proxyApp.post(
-    "/v3/send",
-    async (
-      req: TypedRequestBody<{
-        actions: Array<{ action: string; item_id: string }>;
-        access_token: string;
-      }>,
-      res: Response
-    ): Promise<void> => {
-      const { actions, access_token } = req.body;
-      const client = await getOmnivoreClient(access_token);
+app.post("/v3/send", async (c) => {
+  const data = await c.req.json();
+  const { actions, access_token: accessToken } = data;
+  const client = await getOmnivoreClient(c.env.OMNI_API_URL, accessToken);
 
-      const archives = actions
-        .filter((it) => it.action === "archive")
-        .map((it) => it.item_id);
-      console.log(await Promise.all(archives.map(client.archiveLink, client)));
+  const archives = actions
+    .filter((it: any) => it.action === "archive")
+    .map((it: any) => it.item_id);
+  console.log(await Promise.all(archives.map(client.archiveLink, client)));
 
-      res.send({ action_results: [] });
-    }
-  );
+  return c.json({ action_results: [] });
+});
 
-  proxyApp.post("/v3/get", async (req: Request, res: Response): Promise<void> => {
-    const client = await getOmnivoreClient(req.body.access_token);
-    const articles = await client.fetchPages();
-    const converted = convertSearchResultsToPocketArticles(articles);
+app.post("/v3/get", async (c) => {
+  const data = await c.req.json();
+  const { access_token: accessToken } = data;
 
-    res.send(converted);
-  });
+  const client = await getOmnivoreClient(c.env.OMNI_API_URL, accessToken);
+  const articles = await client.fetchPages();
+  const converted = convertSearchResultsToPocketArticles(articles);
+  return c.json(converted);
+});
 
-  proxyApp.post(
-    "/v3beta/text",
-    async (req: Request, res: Response): Promise<void> => {
-      const { url, access_token } = req.body;
-      const client = await getOmnivoreClient(access_token);
-      const article = await client.fetchPage(url);
+app.post("/v3beta/text", async (c) => {
+  const accessToken = c.req.query('access_token');
+  const body = await c.req.formData();
+  const url = body.get("url")!.toString();
 
-      res.send(articleToPocketFormat(article));
-    }
-  );
+  const client = await getOmnivoreClient(c.env.OMNI_API_URL, accessToken!);
+  const article = await client.fetchPage(url);
 
-  // Create a basic HTTP server
-  const server = http.createServer(proxyApp);
+  return c.json(articleToPocketFormat(article));
+});
 
-  // Start the server on port 8080
-  server.listen(80, () => {
-    console.log("Server running on port 5090");
-  });
-})();
+export default app;

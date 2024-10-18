@@ -1,0 +1,4 @@
+compatibility_date = "2024-10-11"
+
+[vars]
+OMNI_API_URL = "https://api-prod.omnivore.app/api"

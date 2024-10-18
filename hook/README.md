@@ -30,7 +30,7 @@ if (strcmp(urlChar, "https://getpocket.com/v3/get") == 0)
 } 
 else if (strcmp(urlChar, "https://text.getpocket.com/v3beta/text") == 0)
 {
-    replacementUrl = QUrl("http://text.fckpocket.com/v3beta/text");
+    replacementUrl = QUrl("http://text.fckpocket.com/v3beta/text?access_token=<YOUR_ACCESS_TOKEN>");
 }
     
 ```
@@ -44,7 +44,7 @@ if (strcmp(urlChar, "https://getpocket.com/v3/get") == 0)
 } 
 else if (strcmp(urlChar, "https://text.getpocket.com/v3beta/text") == 0)
 {
-    replacementUrl = QUrl("<HOSTED_VERSION_URL>/v3beta/text");
+    replacementUrl = QUrl("<HOSTED_VERSION_URL>/v3beta/text?access_token=<YOUR_ACCESS_TOKEN>");
 }
 ```
 
