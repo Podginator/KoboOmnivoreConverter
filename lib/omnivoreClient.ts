@@ -7,7 +7,7 @@ import {
 } from "../types/OmnivoreSchema";
 
 const API_URL =
-  process.env.OMNIVORE_API_URL ?? "https://api-prod.omnivore.app/api";
+  process.env.OMNIVORE_API_URL ?? "https://omnivore-api.podginator.com/api";
 
 export class OmnivoreClient { 
   username: string; 
@@ -50,7 +50,7 @@ export class OmnivoreClient {
     return response.data.data.me.profile.username;
   }
 
-  async fetchPages(): Promise<SearchItemEdge[]> {
+  async fetchPages(query: string = "in:inbox", max = 1000): Promise<SearchItemEdge[]> {
     const data = {
       query: `query Search($after: String, $first: Int, $query: String) {
               search(first: $first, after: $after, query: $query) {
@@ -103,7 +103,7 @@ export class OmnivoreClient {
                 }
               }
             }`,
-      variables: { query: "in:inbox", after: "0", first: 1000 },
+      variables: { query, after: "0", first: max },
     };
   
     const response: AxiosResponse<{ data: { search: SearchSuccess } }> =

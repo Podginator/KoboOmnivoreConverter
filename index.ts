@@ -46,8 +46,10 @@ import {
   proxyApp.post("/v3/get", async (req: Request, res: Response): Promise<void> => {
     const client = await getOmnivoreClient(req.body.access_token);
     const articles = await client.fetchPages();
-    const converted = convertSearchResultsToPocketArticles(articles);
+    const archived = await client.fetchPages('in:archive', 100);
+    const converted = convertSearchResultsToPocketArticles([...articles, ...archived]);
 
+    console.log(JSON.stringify(converted))
     res.send(converted);
   });
 
@@ -66,7 +68,7 @@ import {
   const server = http.createServer(proxyApp);
 
   // Start the server on port 8080
-  server.listen(80, () => {
+  server.listen(9980, () => {
     console.log("Server running on port 5090");
   });
 })();

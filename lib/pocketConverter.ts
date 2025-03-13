@@ -41,7 +41,7 @@ const convertToPocketSchemea = (
         : new Date(node.savedAt.toString()).getTime() / 1000
     ).toString(),
     time_read: "",
-    status: "0",
+    status: node.isArchived ? "1" : "0",
     time_favorited: "",
     sort_id: 1,
     is_article: "1",
