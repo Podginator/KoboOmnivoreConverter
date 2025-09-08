@@ -1,3 +1,6 @@
+# Note:
+As of September 2025 Kobo has moved to Instapaper. I will look at updating this repository in the future, but in the meantime, upgrading to an earlier version of the firmware will still work. You will also have to avoid automatic updates using this method. 
+
 # Kobo E-Reader Omnivore to Pocket Proxy
 
 This project aims to convert the Pocket App on the Kobo E-Reader, specifically the Kobo Clara model, into an [Omnivore](https://github.com/omnivore-app/omnivore/) reading device using Typescript, Node, and Express. The device utilizes the modified host file on the Kobo Clara, accessible via ssh on the Clara. It can be achieved by following the tutorial available at [https://yingtongli.me/blog/2018/07/30/kobo-telnet.html](https://yingtongli.me/blog/2018/07/30/kobo-telnet.html).
@@ -23,4 +26,4 @@ See [guide.md](./guide.md);
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE)
